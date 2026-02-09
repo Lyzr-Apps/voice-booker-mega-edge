@@ -1,0 +1,43 @@
+{
+  "agent_name": "Hotel Reservation Voice Agent",
+  "agent_id": "698a04d20769219591839a10",
+  "agent_purpose": "voice",
+  "description": "Voice agent for hotel reservation support",
+  "response_schema": {
+    "status": "string (success|error)",
+    "result": {
+      "response": "string",
+      "action_taken": "string (optional)",
+      "data": "object (optional, any structured data)",
+      "suggestions": [
+        "string (optional)"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string (ISO)"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "response": "I've completed the task you requested",
+      "action_taken": "Processed the input and generated output",
+      "data": {
+        "key": "value"
+      },
+      "suggestions": [
+        "You might also want to try X"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Hotel Reservation Voice Agent",
+      "timestamp": "2025-01-15T10:30:00Z"
+    }
+  },
+  "is_actual_tested": false,
+  "test_timestamp": null,
+  "test_message_used": "Hello, provide a sample response",
+  "raw_test_response": "Thank you for calling [Hotel Name], this is your reservation assistant. How may I help you today?",
+  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)"
+}

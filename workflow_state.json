@@ -1,0 +1,10 @@
+{
+  "agents": [
+    {
+      "name": "Hotel Reservation Voice Agent",
+      "agent_id": "698a04d20769219591839a10",
+      "type": "voice",
+      "voice_mode": "Inbound"
+    }
+  ]
+}
