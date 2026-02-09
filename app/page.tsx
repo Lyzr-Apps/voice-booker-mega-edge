@@ -255,11 +255,11 @@ function StatCard({ title, value, trend, trendUp, icon: Icon, accent }: { title:
 
 export default function Home() {
   const [activeView, setActiveView] = useState<'dashboard' | 'history' | 'config' | 'reservations'>('dashboard')
-  const [activeCalls, setActiveCalls] = useState<ActiveCall[]>(generateActiveCalls())
-  const [completedCalls] = useState<CompletedCall[]>(generateCompletedCalls())
-  const [reservations] = useState<Reservation[]>(generateReservations())
+  const [activeCalls, setActiveCalls] = useState<ActiveCall[]>([])
+  const [completedCalls, setCompletedCalls] = useState<CompletedCall[]>([])
+  const [reservations, setReservations] = useState<Reservation[]>([])
   const [isListening, setIsListening] = useState(true)
-  const [currentTime, setCurrentTime] = useState(new Date())
+  const [currentTime, setCurrentTime] = useState<Date | null>(null)
   const [selectedTranscript, setSelectedTranscript] = useState<CompletedCall | null>(null)
   const [transcriptDialogOpen, setTranscriptDialogOpen] = useState(false)
   const [selectedHistoryCall, setSelectedHistoryCall] = useState<CompletedCall | null>(null)
@@ -267,6 +267,7 @@ export default function Home() {
   const [historyFilter, setHistoryFilter] = useState({ search: '', outcome: 'all', intent: 'all' })
   const [sampleData, setSampleData] = useState(true)
   const [configTab, setConfigTab] = useState('greeting')
+  const [mounted, setMounted] = useState(false)
   const [greetingScript, setGreetingScript] = useState('Thank you for calling Grand Vista Hotel. How may I assist you with your reservation today?')
   const [intentResponses, setIntentResponses] = useState<IntentResponse[]>([
     { intent: 'Room Booking', response: 'I would be happy to help you make a reservation. Could you please provide your preferred check-in and check-out dates?' },
@@ -293,6 +294,14 @@ export default function Home() {
   ])
   const [savingConfig, setSavingConfig] = useState(false)
   const [configSaved, setConfigSaved] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    setCurrentTime(new Date())
+    setActiveCalls(generateActiveCalls())
+    setCompletedCalls(generateCompletedCalls())
+    setReservations(generateReservations())
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -389,7 +398,11 @@ export default function Home() {
             </div>
             <Separator orientation="vertical" className="h-6 opacity-30" />
             <div className="text-sm text-muted-foreground">
-              {format(currentTime, 'MMM d, yyyy')} <span className="text-foreground font-medium ml-1">{format(currentTime, 'HH:mm:ss')}</span>
+              {currentTime ? (
+                <>{format(currentTime, 'MMM d, yyyy')} <span className="text-foreground font-medium ml-1">{format(currentTime, 'HH:mm:ss')}</span></>
+              ) : (
+                <span className="text-muted-foreground/50">--:--:--</span>
+              )}
             </div>
           </div>
         </header>
